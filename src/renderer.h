@@ -10,6 +10,7 @@ const Color HIGHLIGHTED = {147, 140, 108, 100};
 const Color PREFILLED = {10, 10, 10, 255};
 const Color NUM = {215, 215, 215, 255};
 const Color WRONG = {200, 0, 0, 100};
+const Color NOTE = {255, 255, 255, 200};
 
 void DrawBoard(const Board& board);
 

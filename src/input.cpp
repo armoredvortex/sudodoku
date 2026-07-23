@@ -24,12 +24,40 @@ void HandleNumInput(Board& board)
     while (ch > 0)
     {
         if (ch >= '1' && ch <= '9')
-            board.SetValue(ch - '0');
+        {
+            if (board.CandidateMode)
+            {
+                board.ToggleCandidate(ch - '0');
+            }
+            else
+            {
+                if (board.GetValue() == ch - '0')
+                {
+                    board.ClearCell();
+                }
+                else
+                {
+                    board.SetValue(ch - '0');
+                }
+            }
+        }
 
-        if (ch == '0')
+        if (ch == '0' && !board.CandidateMode)
             board.ClearCell();
 
         ch = GetCharPressed();
+    }
+}
+
+void HandleInputMode(Board& board)
+{
+    if (IsKeyPressed(KEY_C))
+    {
+        board.CandidateMode = true;
+    }
+    else if (IsKeyPressed(KEY_V))
+    {
+        board.CandidateMode = false;
     }
 }
 
@@ -37,4 +65,5 @@ void HandleInput(Board& board)
 {
     HandleMovement(board);
     HandleNumInput(board);
+    HandleInputMode(board);
 }

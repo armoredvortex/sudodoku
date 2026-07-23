@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
     SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI);
 
     // Create the window and OpenGL context
-    InitWindow(1000, 1500, "Sudodoku");
+    InitWindow(1000, 1200, "Sudodoku");
 
     // game loop
     while (!WindowShouldClose()) // run the loop until the user presses ESCAPE or presses the Close

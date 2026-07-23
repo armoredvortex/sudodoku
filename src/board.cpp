@@ -26,6 +26,12 @@ void Board::MoveCaret(int dRow, int dCol)
     caret[1] = std::clamp(caret[1] + dCol, 0, 8);
 }
 
+int Board::GetValue()
+{
+    Cell& cell = grid[caret[0]][caret[1]];
+    return cell.value;
+}
+
 void Board::SetValue(int val)
 {
     Cell& cell = grid[caret[0]][caret[1]];
@@ -42,4 +48,10 @@ void Board::ClearCell()
     {
         cell.value = 0;
     }
+}
+
+void Board::ToggleCandidate(int val)
+{
+    Cell& cell = grid[caret[0]][caret[1]];
+    cell.candidates.flip(val);
 }

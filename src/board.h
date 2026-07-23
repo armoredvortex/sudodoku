@@ -23,6 +23,7 @@ class Board
     std::array<int, 2> caret = {0, 0};
     Board(const std::string& puzzle, std::array<std::array<int, 9>, 9> sol);
     void MoveCaret(int dRow, int dCol);
+    int GetValue();
     void SetValue(int val);
     void ToggleCandidate(int val);
     void ClearCell();
