@@ -1,6 +1,7 @@
 #include <iostream>
 #include "raylib.h"
 #include "renderer.h"
+#include "board.h"
 #include "solver.h"
 
 int main (int argc, char* argv[])
@@ -22,7 +23,9 @@ int main (int argc, char* argv[])
 		return 1;
 	}
 
-	std::cout << "Hello World!\n";
+	std::cout << "Starting Game!\n";
+
+	Board GameBoard = Board(puzzle);
 
 	// // Tell the window to use vsync and work on high DPI displays
 	// SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI);

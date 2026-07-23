@@ -1,11 +1,16 @@
-#include <array>
-#include <bitset>
+#include "board.h"
 
-class Cell {
-	int value;
-	std::bitset<10> candidates;
-};
+Cell::Cell() = default;
 
-class Board {
-	std::array<std::array<Cell, 9>, 9> grid;
-};
+Cell::Cell(char c)
+    : value(c - '0')
+{
+}
+
+Board::Board(const std::string& puzzle)
+{
+    for (int i = 0; i < 81; i++)
+    {
+        grid[i / 9][i % 9] = Cell(puzzle[i]);
+    }
+}
