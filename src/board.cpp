@@ -1,13 +1,45 @@
 #include "board.h"
+#include <algorithm>
 
 Cell::Cell() = default;
 
-Cell::Cell(char c) : value(c - '0') {}
+Cell::Cell(char c, bool filled) : value(c - '0'), preFilled(filled) {}
 
-Board::Board(const std::string& puzzle)
+Board::Board(const std::string& puzzle, std::array<std::array<int, 9>, 9> sol) : solution(sol)
 {
     for (int i = 0; i < 81; i++)
     {
-        grid[i / 9][i % 9] = Cell(puzzle[i]);
+        if (puzzle[i] != '0')
+        {
+            grid[i / 9][i % 9] = Cell(puzzle[i], true);
+        }
+        else
+        {
+            grid[i / 9][i % 9] = Cell(puzzle[i], false);
+        }
+    }
+}
+
+void Board::MoveCaret(int dRow, int dCol)
+{
+    caret[0] = std::clamp(caret[0] + dRow, 0, 8);
+    caret[1] = std::clamp(caret[1] + dCol, 0, 8);
+}
+
+void Board::SetValue(int val)
+{
+    Cell& cell = grid[caret[0]][caret[1]];
+    if (!cell.preFilled)
+    {
+        cell.value = val;
+    }
+}
+
+void Board::ClearCell()
+{
+    Cell& cell = grid[caret[0]][caret[1]];
+    if (!cell.preFilled)
+    {
+        cell.value = 0;
     }
 }

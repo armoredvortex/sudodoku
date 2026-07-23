@@ -6,18 +6,24 @@
 
 class Cell
 {
+  public:
     int value;
     std::bitset<10> candidates;
-
-  public:
+    bool preFilled = false;
     Cell();
-    Cell(char c);
+    Cell(char c, bool filled);
 };
 
 class Board
 {
-    std::array<std::array<Cell, 9>, 9> grid;
-
   public:
-    Board(const std::string& puzzle);
+    bool CandidateMode = false;
+    std::array<std::array<Cell, 9>, 9> grid;
+    std::array<std::array<int, 9>, 9> solution;
+    std::array<int, 2> caret = {0, 0};
+    Board(const std::string& puzzle, std::array<std::array<int, 9>, 9> sol);
+    void MoveCaret(int dRow, int dCol);
+    void SetValue(int val);
+    void ToggleCandidate(int val);
+    void ClearCell();
 };

@@ -1,4 +1,5 @@
 #include "board.h"
+#include "input.h"
 #include "raylib.h"
 #include "renderer.h"
 #include "solver.h"
@@ -28,23 +29,25 @@ int main(int argc, char* argv[])
 
     std::cout << "Starting Game!\n";
 
-    Board GameBoard = Board(puzzle);
+    Board GameBoard = Board(puzzle, sol.solution);
 
     // Tell the window to use vsync and work on high DPI displays
     SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI);
 
     // Create the window and OpenGL context
-    InitWindow(1000, 1000, "Sudodoku");
+    InitWindow(1000, 1500, "Sudodoku");
 
     // game loop
     while (!WindowShouldClose()) // run the loop until the user presses ESCAPE or presses the Close
                                  // button on the window
     {
+        HandleInput(GameBoard);
+
         // drawing
         BeginDrawing();
 
         // Setup the back buffer for drawing (clear color and depth buffers)
-        ClearBackground((Color){26, 26, 26, 255});
+        ClearBackground(BACKGROUND);
 
         // Draw Board
         DrawBoard(GameBoard);
