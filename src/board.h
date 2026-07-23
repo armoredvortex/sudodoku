@@ -9,7 +9,7 @@ class Cell
     int value;
     std::bitset<10> candidates;
 
-public:
+  public:
     Cell();
     Cell(char c);
 };
@@ -18,6 +18,6 @@ class Board
 {
     std::array<std::array<Cell, 9>, 9> grid;
 
-public:
+  public:
     Board(const std::string& puzzle);
 };

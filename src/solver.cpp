@@ -1,21 +1,25 @@
-#include <string>
 #include "solver.h"
+#include <string>
 
-bool ValidatePuzzleString(const std::string& puzzle){
-	if(puzzle.size() != 81){
-		return false;
-	}
+bool ValidatePuzzleString(const std::string& puzzle)
+{
+    if (puzzle.size() != 81)
+    {
+        return false;
+    }
 
-	for(auto e: puzzle){
-		if(e < '0' || e > '9'){
-			return false;
-		}
-	}
+    for (auto e : puzzle)
+    {
+        if (e < '0' || e > '9')
+        {
+            return false;
+        }
+    }
 
-	return true;
+    return true;
 }
 
-bool IsValid(const std::array<std::array<int,9>,9>& grid, int row, int col, int num)
+bool IsValid(const std::array<std::array<int, 9>, 9>& grid, int row, int col, int num)
 {
     // Check row
     for (int c = 0; c < 9; c++)
@@ -47,10 +51,8 @@ bool IsValid(const std::array<std::array<int,9>,9>& grid, int row, int col, int 
     return true;
 }
 
-bool RecursiveSolve(int idx,
-                    std::array<std::array<int,9>,9>& grid,
-                    int& solutionCount,
-                    std::array<std::array<int,9>,9>& solution)
+bool RecursiveSolve(int idx, std::array<std::array<int, 9>, 9>& grid, int& solutionCount,
+                    std::array<std::array<int, 9>, 9>& solution)
 {
     if (idx == 81)
     {
@@ -83,19 +85,22 @@ bool RecursiveSolve(int idx,
     return false;
 }
 
-PuzzleSolution SolvePuzzle(const std::string& puzzle){
-	std::array<std::array<int,9>, 9> grid;
-	for(int i=0; i<puzzle.size(); i++){
-		grid[i/9][i%9] = puzzle[i] - '0';
-	}
+PuzzleSolution SolvePuzzle(const std::string& puzzle)
+{
+    std::array<std::array<int, 9>, 9> grid;
+    for (int i = 0; i < puzzle.size(); i++)
+    {
+        grid[i / 9][i % 9] = puzzle[i] - '0';
+    }
 
-	int SolutionCount = 0;
-	std::array<std::array<int,9>, 9> solution;
-	RecursiveSolve(0, grid, SolutionCount, solution);
-	
-	if(SolutionCount != 1){
-		return {false, {}};
-	}
+    int SolutionCount = 0;
+    std::array<std::array<int, 9>, 9> solution;
+    RecursiveSolve(0, grid, SolutionCount, solution);
 
-	return {true, solution};
+    if (SolutionCount != 1)
+    {
+        return {false, {}};
+    }
+
+    return {true, solution};
 }
