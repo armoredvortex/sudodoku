@@ -50,6 +50,12 @@ void Board::ClearCell()
     }
 }
 
+void Board::ClearCandidates()
+{
+    Cell& cell = grid[caret[0]][caret[1]];
+    cell.candidates.reset();
+}
+
 void Board::ToggleCandidate(int val)
 {
     Cell& cell = grid[caret[0]][caret[1]];

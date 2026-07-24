@@ -27,4 +27,5 @@ class Board
     void SetValue(int val);
     void ToggleCandidate(int val);
     void ClearCell();
+    void ClearCandidates();
 };

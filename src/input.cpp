@@ -42,8 +42,15 @@ void HandleNumInput(Board& board)
             }
         }
 
-        if (ch == '0' && !board.CandidateMode)
-            board.ClearCell();
+        if (ch == '0')
+            if (board.CandidateMode)
+            {
+                board.ClearCandidates();
+            }
+            else
+            {
+                board.ClearCell();
+            }
 
         ch = GetCharPressed();
     }
