@@ -17,45 +17,43 @@ void HandleMovement(Board& board)
         board.MoveCaret(+1, 0);
 }
 
+bool NumberPressed(int value)
+{
+    static constexpr KeyboardKey topRow[] = {KEY_ONE, KEY_TWO,   KEY_THREE, KEY_FOUR, KEY_FIVE,
+                                             KEY_SIX, KEY_SEVEN, KEY_EIGHT, KEY_NINE};
+
+    static constexpr KeyboardKey keypad[] = {KEY_KP_1, KEY_KP_2, KEY_KP_3, KEY_KP_4, KEY_KP_5,
+                                             KEY_KP_6, KEY_KP_7, KEY_KP_8, KEY_KP_9};
+
+    return IsKeyPressed(topRow[value - 1]) || IsKeyPressed(keypad[value - 1]);
+}
+
 void HandleNumInput(Board& board)
 {
-    bool candidateMode = IsKeyDown(KEY_LEFT_CONTROL) || IsKeyDown(KEY_RIGHT_CONTROL);
-    int ch = GetCharPressed();
+    bool candidateMode = IsKeyDown(KEY_LEFT_SHIFT) || IsKeyDown(KEY_RIGHT_SHIFT);
 
-    while (ch > 0)
+    for (int i = 1; i <= 9; i++)
     {
-        if (ch >= '1' && ch <= '9')
+        if (NumberPressed(i))
         {
             if (candidateMode)
-            {
-                board.ToggleCandidate(ch - '0');
-            }
+                board.ToggleCandidate(i);
             else
             {
-                if (board.GetValue() == ch - '0')
-                {
+                if (board.GetValue() == i)
                     board.ClearCell();
-                }
                 else
-                {
-                    board.SetValue(ch - '0');
-                }
+                    board.SetValue(i);
             }
         }
+    }
 
-        if (ch == '0')
-        {
-            if (candidateMode)
-            {
-                board.ClearCandidates();
-            }
-            else
-            {
-                board.ClearCell();
-            }
-        }
-
-        ch = GetCharPressed();
+    if (IsKeyPressed(KEY_ZERO) || IsKeyPressed(KEY_KP_0))
+    {
+        if (candidateMode)
+            board.ClearCandidates();
+        else
+            board.ClearCell();
     }
 }
 
