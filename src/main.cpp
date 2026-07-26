@@ -17,6 +17,7 @@ void PrintUsage(const char* programName)
     std::cout << "  " << programName << " add <puzzle> <easy|medium|hard>\n";
     std::cout << "  " << programName << " history\n";
     std::cout << "  " << programName << " status\n";
+    std::cout << "  " << programName << " ongoing\n";
 }
 
 int main(int argc, char* argv[])
@@ -52,6 +53,24 @@ int main(int argc, char* argv[])
                       << " mistakes | " << entry.date << "\n";
         }
         std::cout << "\n";
+        return 0;
+    }
+    else if (command == "ongoing")
+    {
+        auto ongoing = GetInProgressPuzzles();
+        if (ongoing.empty())
+        {
+            std::cout << "No ongoing puzzles.\n";
+            return 0;
+        }
+        std::cout << "\n=== Ongoing Puzzles ===\n";
+        for (const auto& entry : ongoing)
+        {
+            int minutes = (int)entry.time / 60;
+            int seconds = (int)entry.time % 60;
+            printf("%s | Time: %02d:%02d | Mistakes: %d\n", entry.difficulty.c_str(), minutes, seconds, entry.mistakes);
+            std::cout << "Puzzle: " << entry.originalPuzzle << "\n\n";
+        }
         return 0;
     }
     else if (command == "list")
@@ -122,13 +141,15 @@ int main(int argc, char* argv[])
 
         Board gameBoard(puzzle, solution.solution);
 
+        float elapsedTime = 0.0f;
+        LoadInProgressPuzzle(puzzle, gameBoard, elapsedTime);
+
         // Tell the window to use vsync and work on high DPI displays
         SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI | FLAG_WINDOW_RESIZABLE);
 
         // Create the window and OpenGL context
         InitWindow(1000, 1000, "Sudodoku");
 
-        float elapsedTime = 0.0f;
         bool puzzleSolved = false;
         bool isPaused = false;
 
@@ -180,12 +201,18 @@ int main(int argc, char* argv[])
         // Save solved puzzle if it was completed
         if (puzzleSolved)
         {
+            RemoveInProgressPuzzle(puzzle);
             SaveSolvedPuzzle(puzzle, difficulty, elapsedTime, gameBoard.mistakes);
             std::cout << "Puzzle saved! Time: ";
             int minutes = (int)elapsedTime / 60;
             int seconds = (int)elapsedTime % 60;
             printf("%02d:%02d", minutes, seconds);
             std::cout << " | Mistakes: " << gameBoard.mistakes << "\n";
+        }
+        else
+        {
+            SaveInProgressPuzzle(puzzle, difficulty, gameBoard, elapsedTime);
+            std::cout << "Puzzle saved to in-progress. Resume with the same command.\n";
         }
 
         return 0;

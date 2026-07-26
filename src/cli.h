@@ -18,6 +18,15 @@ struct SolvedEntry
     std::string date;
 };
 
+struct InProgressEntry
+{
+    std::string originalPuzzle;
+    std::string difficulty;
+    float time;
+    int mistakes;
+};
+
+
 // Initialize ~/.sudodoku directory
 void InitializePuzzleDirectory();
 
@@ -45,3 +54,18 @@ std::string GetPuzzleFilePath(const std::string& difficulty);
 
 // Helper to get solved file path
 std::string GetSolvedFilePath();
+
+// Helper to get in-progress file path
+std::string GetInProgressFilePath();
+
+// Save in-progress puzzle
+void SaveInProgressPuzzle(const std::string& originalPuzzle, const std::string& difficulty, class Board& board, float time);
+
+// Load in-progress puzzle. Returns true if found and loaded.
+bool LoadInProgressPuzzle(const std::string& originalPuzzle, class Board& board, float& time);
+
+// Remove in-progress puzzle
+void RemoveInProgressPuzzle(const std::string& originalPuzzle);
+
+// View in-progress games
+std::vector<InProgressEntry> GetInProgressPuzzles();
