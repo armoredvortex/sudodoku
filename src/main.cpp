@@ -13,7 +13,7 @@ void PrintUsage(const char* programName)
 {
     std::cout << "Usage:\n";
     std::cout << "  " << programName << " list [easy|medium|hard]\n";
-    std::cout << "  " << programName << " play <difficulty>\n";
+    std::cout << "  " << programName << " play <difficulty> [index]\n";
     std::cout << "  " << programName << " add <puzzle> <easy|medium|hard>\n";
     std::cout << "  " << programName << " history\n";
     std::cout << "  " << programName << " status\n";
@@ -85,15 +85,25 @@ int main(int argc, char* argv[])
     {
         if (argc < 3)
         {
-            std::cerr << "Usage: " << argv[0] << " play <difficulty>\n";
+            std::cerr << "Usage: " << argv[0] << " play <difficulty> [index]\n";
             return 1;
         }
         std::string difficulty = argv[2];
-        std::string puzzle = GetPuzzle(difficulty, 0);
+        int index = 0;
+        if (argc > 3)
+        {
+            try {
+                index = std::stoi(argv[3]);
+            } catch (...) {
+                std::cerr << "Invalid index.\n";
+                return 1;
+            }
+        }
+        std::string puzzle = GetPuzzle(difficulty, index);
 
         if (puzzle.empty())
         {
-            std::cerr << "No unsolved puzzles in " << difficulty << " category.\n";
+            std::cerr << "No unsolved puzzle found in " << difficulty << " category at index " << index << ".\n";
             return 1;
         }
 
@@ -120,10 +130,16 @@ int main(int argc, char* argv[])
 
         float elapsedTime = 0.0f;
         bool puzzleSolved = false;
+        bool isPaused = false;
 
         // game loop
         while (!WindowShouldClose())
         {
+            if (IsKeyPressed(KEY_P))
+            {
+                isPaused = !isPaused;
+            }
+
             // drawing
             BeginDrawing();
 
@@ -132,8 +148,11 @@ int main(int argc, char* argv[])
 
             if (!gameBoard.IsSolved())
             {
-                elapsedTime += GetFrameTime();
-                HandleInput(gameBoard);
+                if (!isPaused)
+                {
+                    elapsedTime += GetFrameTime();
+                    HandleInput(gameBoard);
+                }
             }
             else
             {
@@ -145,6 +164,10 @@ int main(int argc, char* argv[])
             if (gameBoard.IsSolved())
             {
                 DrawVictoryScreen(elapsedTime, gameBoard.mistakes);
+            }
+            else if (isPaused)
+            {
+                DrawPauseScreen();
             }
 
             // end the frame and get ready for the next one  (display frame, poll input, etc...)

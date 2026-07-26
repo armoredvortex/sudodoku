@@ -151,3 +151,28 @@ void DrawVictoryScreen(float elapsedTime, int mistakes)
     int statsY = victoryY + victoryFontSize + 50;
     DrawText(statsText, statsX, statsY, statsFontSize, NUM);
 }
+
+void DrawPauseScreen()
+{
+    int width = GetScreenWidth();
+    int height = GetScreenHeight();
+
+    // Semi-transparent overlay
+    DrawRectangle(0, 0, width, height, {0, 0, 0, 200});
+
+    // Pause message
+    const char* pauseText = "PAUSED";
+    int pauseFontSize = 80;
+    int pauseWidth = MeasureText(pauseText, pauseFontSize);
+    int pauseX = (width - pauseWidth) / 2;
+    int pauseY = (height / 2) - 150;
+    DrawText(pauseText, pauseX, pauseY, pauseFontSize, NUM);
+
+    // Instructions
+    const char* subText = "Press P to Unpause";
+    int subFontSize = 40;
+    int subWidth = MeasureText(subText, subFontSize);
+    int subX = (width - subWidth) / 2;
+    int subY = pauseY + pauseFontSize + 50;
+    DrawText(subText, subX, subY, subFontSize, NUM);
+}

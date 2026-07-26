@@ -17,5 +17,7 @@ void DrawBoard(const Board& board, float elapsedTime = 0.0f);
 
 void DrawVictoryScreen(float elapsedTime, int mistakes);
 
+void DrawPauseScreen();
+
 void DrawLineDashedEx(Vector2 startPos, Vector2 endPos, float thickness, int dashSize,
                       int spaceSize, Color color);
