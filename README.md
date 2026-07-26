@@ -26,3 +26,32 @@ sudodoku history                       # View solve history
 sudodoku status                        # View puzzle statistics
 sudodoku ongoing                       # View currently paused/in-progress games
 ```
+
+## Managing Puzzle Files
+
+Sudodoku stores all of its data in `~/.sudodoku/`:
+
+```text
+~/.sudodoku/
+├── in_progress.txt
+├── puzzles_easy.txt
+├── puzzles_medium.txt
+├── puzzles_hard.txt
+└── solved.txt
+```
+
+You can edit these files directly if you want to import, export, or manage puzzles in bulk.
+
+### Puzzle files
+
+`puzzles_easy.txt`, `puzzles_medium.txt`, and `puzzles_hard.txt` each contain one puzzle per line as an 81-character puzzle string.
+
+Example:
+
+```text
+530070000600195000098000060800060003400803001700020006060000280000419005000080079
+```
+
+You can paste multiple puzzle strings into the appropriate file, one puzzle per line. Sudodoku will automatically load them.
+
+> **Note:** Ensure every puzzle is a valid 81-character Sudoku puzzle.
