@@ -1,42 +1,42 @@
 #include "board.h"
 #include "input.h"
-#include "menu.h"
-#include "raygui.h"
 #include "raylib.h"
 #include "renderer.h"
 #include "solver.h"
+
 #include <iostream>
+#include <string>
 
 int main(int argc, char* argv[])
 {
-    Board GameBoard;
+    if (argc < 2)
+    {
+        std::cerr << "Usage: " << argv[0] << " <81-character puzzle string>\n";
+        return 1;
+    }
+
+    std::string puzzle = argv[1];
+
+    if (!ValidatePuzzleString(puzzle))
+    {
+        std::cerr << "Puzzle must contain exactly 81 digits.\n";
+        return 1;
+    }
+
+    PuzzleSolution solution = SolvePuzzle(puzzle);
+    if (!solution.solvable)
+    {
+        std::cerr << "Puzzle has no unique solution.\n";
+        return 1;
+    }
+
+    Board gameBoard(puzzle, solution.solution);
 
     // Tell the window to use vsync and work on high DPI displays
     SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI);
 
     // Create the window and OpenGL context
     InitWindow(1200, 1200, "Sudodoku");
-
-    GuiSetStyle(DEFAULT, TEXT_SIZE, 28);
-    GuiSetStyle(DEFAULT, BORDER_WIDTH, 2);
-    GuiSetStyle(DEFAULT, TEXT_PADDING, 12);
-
-    GuiSetStyle(BUTTON, BORDER_WIDTH, 2);
-    GuiSetStyle(TEXTBOX, BORDER_WIDTH, 2);
-
-    GuiSetStyle(DEFAULT, BACKGROUND_COLOR, ColorToInt(BACKGROUND));
-    GuiSetStyle(DEFAULT, BORDER_COLOR_NORMAL, ColorToInt(LINE_PRIMARY));
-    GuiSetStyle(DEFAULT, TEXT_COLOR_NORMAL, ColorToInt(NUM));
-
-    GuiSetStyle(BUTTON, BASE_COLOR_NORMAL, ColorToInt(BACKGROUND));
-    GuiSetStyle(BUTTON, BASE_COLOR_FOCUSED, ColorToInt(HIGHLIGHTED));
-    GuiSetStyle(BUTTON, BASE_COLOR_PRESSED, ColorToInt(PREFILLED));
-
-    GuiSetStyle(TEXTBOX, BASE_COLOR_NORMAL, ColorToInt(BACKGROUND));
-    GuiSetStyle(TEXTBOX, BORDER_COLOR_NORMAL, ColorToInt(LINE_PRIMARY));
-    GuiSetStyle(TEXTBOX, TEXT_COLOR_NORMAL, ColorToInt(NUM));
-
-    GameState state = GameState::Menu;
 
     // game loop
     while (!WindowShouldClose()) // run the loop until the user presses ESCAPE or presses the Close
@@ -49,21 +49,8 @@ int main(int argc, char* argv[])
         // Setup the back buffer for drawing (clear color and depth buffers)
         ClearBackground(BACKGROUND);
 
-        switch (state)
-        {
-        case GameState::Menu:
-            DrawMainMenu(state, GameBoard);
-            break;
-
-        case GameState::Playing:
-            HandleInput(GameBoard);
-            DrawBoard(GameBoard);
-            break;
-
-        case GameState::Paused:
-            DrawBoard(GameBoard);
-            DrawPausedMenu(state);
-        }
+        HandleInput(gameBoard);
+        DrawBoard(gameBoard);
 
         // end the frame and get ready for the next one  (display frame, poll input, etc...)
         EndDrawing();

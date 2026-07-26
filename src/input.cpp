@@ -19,7 +19,7 @@ void HandleMovement(Board& board)
 
 void HandleNumInput(Board& board)
 {
-    bool candidateMode = IsKeyDown(KEY_LEFT_SHIFT) || IsKeyDown(KEY_RIGHT_SHIFT);
+    bool candidateMode = IsKeyDown(KEY_LEFT_CONTROL) || IsKeyDown(KEY_RIGHT_CONTROL);
     int ch = GetCharPressed();
 
     while (ch > 0)
