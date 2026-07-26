@@ -299,8 +299,10 @@ bool DrawHistoryScreen(const std::vector<SolvedEntry>& history, int& currentPage
     {
         int itemsPerPage = 8;
         int totalPages = (history.size() + itemsPerPage - 1) / itemsPerPage;
-        if (currentPage >= totalPages) currentPage = totalPages - 1;
-        if (currentPage < 0) currentPage = 0;
+        if (currentPage >= totalPages)
+            currentPage = totalPages - 1;
+        if (currentPage < 0)
+            currentPage = 0;
 
         int startIdx = currentPage * itemsPerPage;
         int endIdx = std::min(startIdx + itemsPerPage, (int)history.size());
@@ -321,11 +323,13 @@ bool DrawHistoryScreen(const std::vector<SolvedEntry>& history, int& currentPage
         int btnHeight = 50;
         if (currentPage > 0)
         {
-            if (DrawButton("Prev", 50, height - 100, btnWidth, btnHeight)) currentPage--;
+            if (DrawButton("Prev", 50, height - 100, btnWidth, btnHeight))
+                currentPage--;
         }
         if (currentPage < totalPages - 1)
         {
-            if (DrawButton("Next", width - 50 - btnWidth, height - 100, btnWidth, btnHeight)) currentPage++;
+            if (DrawButton("Next", width - 50 - btnWidth, height - 100, btnWidth, btnHeight))
+                currentPage++;
         }
         char pageBuf[32];
         snprintf(pageBuf, sizeof(pageBuf), "Page %d / %d", currentPage + 1, totalPages);
@@ -365,8 +369,10 @@ int DrawOngoingScreen(const std::vector<InProgressEntry>& ongoing, int& currentP
     {
         int itemsPerPage = 7;
         int totalPages = (ongoing.size() + itemsPerPage - 1) / itemsPerPage;
-        if (currentPage >= totalPages) currentPage = totalPages - 1;
-        if (currentPage < 0) currentPage = 0;
+        if (currentPage >= totalPages)
+            currentPage = totalPages - 1;
+        if (currentPage < 0)
+            currentPage = 0;
 
         int startIdx = currentPage * itemsPerPage;
         int endIdx = std::min(startIdx + itemsPerPage, (int)ongoing.size());
@@ -392,11 +398,13 @@ int DrawOngoingScreen(const std::vector<InProgressEntry>& ongoing, int& currentP
         int pbtnWidth = 150;
         if (currentPage > 0)
         {
-            if (DrawButton("Prev", 50, height - 100, pbtnWidth, btnHeight)) currentPage--;
+            if (DrawButton("Prev", 50, height - 100, pbtnWidth, btnHeight))
+                currentPage--;
         }
         if (currentPage < totalPages - 1)
         {
-            if (DrawButton("Next", width - 50 - pbtnWidth, height - 100, pbtnWidth, btnHeight)) currentPage++;
+            if (DrawButton("Next", width - 50 - pbtnWidth, height - 100, pbtnWidth, btnHeight))
+                currentPage++;
         }
         char pageBuf[32];
         snprintf(pageBuf, sizeof(pageBuf), "Page %d / %d", currentPage + 1, totalPages);
@@ -405,20 +413,23 @@ int DrawOngoingScreen(const std::vector<InProgressEntry>& ongoing, int& currentP
     return -1;
 }
 
-int DrawPuzzleSelectScreen(const std::vector<PuzzleEntry>& puzzles, const std::vector<InProgressEntry>& ongoing, int& currentPage)
+int DrawPuzzleSelectScreen(const std::vector<PuzzleEntry>& puzzles,
+                           const std::vector<InProgressEntry>& ongoing, int& currentPage)
 {
     int width = GetScreenWidth();
     int height = GetScreenHeight();
-    
+
     const char* title = "SELECT PUZZLE";
     int titleSize = 60;
     int titleW = MeasureText(title, titleSize);
     DrawText(title, (width - titleW) / 2, 80, titleSize, NUM);
-    
+
     int btnWidth = 200;
     int btnHeight = 50;
-    bool backClicked = DrawButton("Back", (width - btnWidth) / 2, height - 100, btnWidth, btnHeight);
-    if (backClicked) return puzzles.size(); // special value for back
+    bool backClicked =
+        DrawButton("Back", (width - btnWidth) / 2, height - 100, btnWidth, btnHeight);
+    if (backClicked)
+        return puzzles.size(); // special value for back
 
     int y = 200;
     if (puzzles.empty())
@@ -431,8 +442,10 @@ int DrawPuzzleSelectScreen(const std::vector<PuzzleEntry>& puzzles, const std::v
     {
         int itemsPerPage = 7;
         int totalPages = (puzzles.size() + itemsPerPage - 1) / itemsPerPage;
-        if (currentPage >= totalPages) currentPage = totalPages - 1;
-        if (currentPage < 0) currentPage = 0;
+        if (currentPage >= totalPages)
+            currentPage = totalPages - 1;
+        if (currentPage < 0)
+            currentPage = 0;
 
         int startIdx = currentPage * itemsPerPage;
         int endIdx = std::min(startIdx + itemsPerPage, (int)puzzles.size());
@@ -440,11 +453,11 @@ int DrawPuzzleSelectScreen(const std::vector<PuzzleEntry>& puzzles, const std::v
         int slotWidth = 700;
         int slotHeight = 60;
         int slotX = (width - slotWidth) / 2;
-        
+
         for (int i = startIdx; i < endIdx; i++)
         {
             const auto& entry = puzzles[i];
-            
+
             bool isActive = false;
             for (const auto& on : ongoing)
             {
@@ -458,25 +471,30 @@ int DrawPuzzleSelectScreen(const std::vector<PuzzleEntry>& puzzles, const std::v
             char buf[128];
             if (isActive)
             {
-                snprintf(buf, sizeof(buf), "[ACTIVE] Puzzle %d: %.*s...", entry.index, 20, entry.puzzle.c_str());
+                snprintf(buf, sizeof(buf), "[ACTIVE] Puzzle %d: %.*s...", entry.index, 20,
+                         entry.puzzle.c_str());
             }
             else
             {
-                snprintf(buf, sizeof(buf), "Puzzle %d: %.*s...", entry.index, 20, entry.puzzle.c_str());
+                snprintf(buf, sizeof(buf), "Puzzle %d: %.*s...", entry.index, 20,
+                         entry.puzzle.c_str());
             }
-            
-            if (DrawButton(buf, slotX, y, slotWidth, slotHeight)) return i;
+
+            if (DrawButton(buf, slotX, y, slotWidth, slotHeight))
+                return i;
             y += slotHeight + 20;
         }
 
         int pbtnWidth = 150;
         if (currentPage > 0)
         {
-            if (DrawButton("Prev", 50, height - 100, pbtnWidth, btnHeight)) currentPage--;
+            if (DrawButton("Prev", 50, height - 100, pbtnWidth, btnHeight))
+                currentPage--;
         }
         if (currentPage < totalPages - 1)
         {
-            if (DrawButton("Next", width - 50 - pbtnWidth, height - 100, pbtnWidth, btnHeight)) currentPage++;
+            if (DrawButton("Next", width - 50 - pbtnWidth, height - 100, pbtnWidth, btnHeight))
+                currentPage++;
         }
         char pageBuf[32];
         snprintf(pageBuf, sizeof(pageBuf), "Page %d / %d", currentPage + 1, totalPages);

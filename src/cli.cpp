@@ -1,10 +1,10 @@
 #include "cli.h"
 #include "board.h"
+#include <ctime>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <sstream>
-#include <ctime>
 
 namespace fs = std::filesystem;
 
@@ -138,8 +138,8 @@ void SaveSolvedPuzzle(const std::string& puzzle, const std::string& difficulty, 
         throw std::runtime_error("Failed to open solved file: " + solvedPath);
     }
 
-    solvedFile << puzzle << "|" << difficulty << "|" << timeStr << "|" << mistakes << "|"
-               << dateStr << "\n";
+    solvedFile << puzzle << "|" << difficulty << "|" << timeStr << "|" << mistakes << "|" << dateStr
+               << "\n";
     solvedFile.close();
 
     // Remove from unsolved puzzles
@@ -238,10 +238,11 @@ std::string GetInProgressFilePath()
     return GetSudokuDir() + "/in_progress.txt";
 }
 
-void SaveInProgressPuzzle(const std::string& originalPuzzle, const std::string& difficulty, Board& board, float time)
+void SaveInProgressPuzzle(const std::string& originalPuzzle, const std::string& difficulty,
+                          Board& board, float time)
 {
     std::string filepath = GetInProgressFilePath();
-    
+
     std::vector<std::string> lines;
     std::ifstream inFile(filepath);
     if (inFile.is_open())
@@ -258,22 +259,28 @@ void SaveInProgressPuzzle(const std::string& originalPuzzle, const std::string& 
     }
 
     std::string currentGrid = "";
-    for (int r = 0; r < 9; r++) {
-        for (int c = 0; c < 9; c++) {
+    for (int r = 0; r < 9; r++)
+    {
+        for (int c = 0; c < 9; c++)
+        {
             currentGrid += (char)(board.grid[r][c].value + '0');
         }
     }
 
     std::string candidatesStr = "";
-    for (int r = 0; r < 9; r++) {
-        for (int c = 0; c < 9; c++) {
+    for (int r = 0; r < 9; r++)
+    {
+        for (int c = 0; c < 9; c++)
+        {
             candidatesStr += std::to_string(board.grid[r][c].candidates.to_ulong());
-            if (r != 8 || c != 8) candidatesStr += ",";
+            if (r != 8 || c != 8)
+                candidatesStr += ",";
         }
     }
 
     std::ostringstream oss;
-    oss << originalPuzzle << "|" << difficulty << "|" << time << "|" << board.mistakes << "|" << currentGrid << "|" << candidatesStr;
+    oss << originalPuzzle << "|" << difficulty << "|" << time << "|" << board.mistakes << "|"
+        << currentGrid << "|" << candidatesStr;
     lines.push_back(oss.str());
 
     std::ofstream outFile(filepath);
@@ -291,16 +298,18 @@ bool LoadInProgressPuzzle(const std::string& originalPuzzle, Board& board, float
 {
     std::string filepath = GetInProgressFilePath();
     std::ifstream inFile(filepath);
-    if (!inFile.is_open()) return false;
+    if (!inFile.is_open())
+        return false;
 
     std::string line;
     while (std::getline(inFile, line))
     {
-        if (line.empty()) continue;
-        
+        if (line.empty())
+            continue;
+
         std::stringstream ss(line);
         std::string puzzle, difficulty, timeStr, mistakesStr, currentGrid, candidatesStr;
-        
+
         if (std::getline(ss, puzzle, '|') && std::getline(ss, difficulty, '|') &&
             std::getline(ss, timeStr, '|') && std::getline(ss, mistakesStr, '|') &&
             std::getline(ss, currentGrid, '|') && std::getline(ss, candidatesStr, '|'))
@@ -309,8 +318,9 @@ bool LoadInProgressPuzzle(const std::string& originalPuzzle, Board& board, float
             {
                 time = std::stof(timeStr);
                 board.mistakes = std::stoi(mistakesStr);
-                
-                for (int i = 0; i < 81 && i < (int)currentGrid.length(); i++) {
+
+                for (int i = 0; i < 81 && i < (int)currentGrid.length(); i++)
+                {
                     int r = i / 9;
                     int c = i % 9;
                     board.grid[r][c].value = currentGrid[i] - '0';
@@ -337,7 +347,8 @@ void RemoveInProgressPuzzle(const std::string& originalPuzzle)
 {
     std::string filepath = GetInProgressFilePath();
     std::ifstream inFile(filepath);
-    if (!inFile.is_open()) return;
+    if (!inFile.is_open())
+        return;
 
     std::vector<std::string> lines;
     std::string line;
@@ -353,7 +364,8 @@ void RemoveInProgressPuzzle(const std::string& originalPuzzle)
     std::ofstream outFile(filepath);
     for (const auto& l : lines)
     {
-        if (!l.empty()) outFile << l << "\n";
+        if (!l.empty())
+            outFile << l << "\n";
     }
 }
 
@@ -362,12 +374,14 @@ std::vector<InProgressEntry> GetInProgressPuzzles()
     std::vector<InProgressEntry> entries;
     std::string filepath = GetInProgressFilePath();
     std::ifstream inFile(filepath);
-    if (!inFile.is_open()) return entries;
+    if (!inFile.is_open())
+        return entries;
 
     std::string line;
     while (std::getline(inFile, line))
     {
-        if (line.empty()) continue;
+        if (line.empty())
+            continue;
         std::stringstream ss(line);
         std::string puzzle, difficulty, timeStr, mistakesStr;
         if (std::getline(ss, puzzle, '|') && std::getline(ss, difficulty, '|') &&
@@ -378,4 +392,3 @@ std::vector<InProgressEntry> GetInProgressPuzzles()
     }
     return entries;
 }
-

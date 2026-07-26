@@ -26,7 +26,6 @@ struct InProgressEntry
     int mistakes;
 };
 
-
 // Initialize ~/.sudodoku directory
 void InitializePuzzleDirectory();
 
@@ -59,7 +58,8 @@ std::string GetSolvedFilePath();
 std::string GetInProgressFilePath();
 
 // Save in-progress puzzle
-void SaveInProgressPuzzle(const std::string& originalPuzzle, const std::string& difficulty, class Board& board, float time);
+void SaveInProgressPuzzle(const std::string& originalPuzzle, const std::string& difficulty,
+                          class Board& board, float time);
 
 // Load in-progress puzzle. Returns true if found and loaded.
 bool LoadInProgressPuzzle(const std::string& originalPuzzle, class Board& board, float& time);

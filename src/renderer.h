@@ -22,7 +22,8 @@ void DrawPauseScreen();
 
 int DrawMainMenu();
 int DrawDifficultyMenu();
-int DrawPuzzleSelectScreen(const std::vector<PuzzleEntry>& puzzles, const std::vector<InProgressEntry>& ongoing, int& currentPage);
+int DrawPuzzleSelectScreen(const std::vector<PuzzleEntry>& puzzles,
+                           const std::vector<InProgressEntry>& ongoing, int& currentPage);
 bool DrawHistoryScreen(const std::vector<SolvedEntry>& history, int& currentPage);
 int DrawOngoingScreen(const std::vector<InProgressEntry>& ongoing, int& currentPage);
 
