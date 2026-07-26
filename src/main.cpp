@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
     SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI);
 
     // Create the window and OpenGL context
-    InitWindow(1200, 1200, "Sudodoku");
+    InitWindow(1000, 1000, "Sudodoku");
 
     float elapsedTime = 0.0f;
 
@@ -44,10 +44,6 @@ int main(int argc, char* argv[])
     while (!WindowShouldClose()) // run the loop until the user presses ESCAPE or presses the Close
                                  // button on the window
     {
-        if (!gameBoard.IsSolved())
-        {
-            elapsedTime += GetFrameTime();
-        }
 
         // drawing
         BeginDrawing();
@@ -55,7 +51,12 @@ int main(int argc, char* argv[])
         // Setup the back buffer for drawing (clear color and depth buffers)
         ClearBackground(BACKGROUND);
 
-        HandleInput(gameBoard);
+        if (!gameBoard.IsSolved())
+        {
+            elapsedTime += GetFrameTime();
+            HandleInput(gameBoard);
+        }
+
         DrawBoard(gameBoard, elapsedTime);
 
         if (gameBoard.IsSolved())
