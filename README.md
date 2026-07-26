@@ -8,11 +8,13 @@ A minimal sudoku client written using raylib
 
 ## Keybinds
 
-- **Arrow Keys / WASD**: Move selection
-- **1-9**: Enter number
-- **Shift + 1-9**: Toggle pencil mark (candidate)
-- **0**: Clear cell
-- **P**: Pause / Unpause game
+- **Arrow Keys / WASD**: Move caret
+- **1-9**: Place number
+- **Shift + 1-9**: Add pencil mark
+- **0 / Shift + 0**: Clear cell / Clear pencil marks
+- **P**: Pause/Unpause game
+- **R**: Reset current game
+- **ESC**: Save progress and exit to menu
 
 ## CLI Usage
 

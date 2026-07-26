@@ -15,9 +15,18 @@ const Color SAME_VALUE = {38, 79, 120, 100};     // Faded classic editor blue
 
 void DrawBoard(const Board& board, float elapsedTime = 0.0f);
 
-void DrawVictoryScreen(float elapsedTime, int mistakes);
+#include "cli.h"
 
+void DrawVictoryScreen(float elapsedTime, int mistakes);
 void DrawPauseScreen();
+
+int DrawMainMenu();
+int DrawDifficultyMenu();
+int DrawPuzzleSelectScreen(const std::vector<PuzzleEntry>& puzzles, const std::vector<InProgressEntry>& ongoing, int& currentPage);
+bool DrawHistoryScreen(const std::vector<SolvedEntry>& history, int& currentPage);
+int DrawOngoingScreen(const std::vector<InProgressEntry>& ongoing, int& currentPage);
+
+void DrawConfirmResetScreen();
 
 void DrawLineDashedEx(Vector2 startPos, Vector2 endPos, float thickness, int dashSize,
                       int spaceSize, Color color);
