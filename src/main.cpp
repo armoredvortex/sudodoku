@@ -38,10 +38,16 @@ int main(int argc, char* argv[])
     // Create the window and OpenGL context
     InitWindow(1200, 1200, "Sudodoku");
 
+    float elapsedTime = 0.0f;
+
     // game loop
     while (!WindowShouldClose()) // run the loop until the user presses ESCAPE or presses the Close
                                  // button on the window
     {
+        if (!gameBoard.IsSolved())
+        {
+            elapsedTime += GetFrameTime();
+        }
 
         // drawing
         BeginDrawing();
@@ -50,7 +56,12 @@ int main(int argc, char* argv[])
         ClearBackground(BACKGROUND);
 
         HandleInput(gameBoard);
-        DrawBoard(gameBoard);
+        DrawBoard(gameBoard, elapsedTime);
+
+        if (gameBoard.IsSolved())
+        {
+            DrawVictoryScreen(elapsedTime, gameBoard.mistakes);
+        }
 
         // end the frame and get ready for the next one  (display frame, poll input, etc...)
         EndDrawing();

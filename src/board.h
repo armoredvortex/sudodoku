@@ -20,6 +20,7 @@ class Board
     std::array<std::array<Cell, 9>, 9> grid;
     std::array<std::array<int, 9>, 9> solution;
     std::array<int, 2> caret = {0, 0};
+    int mistakes = 0;
     Board() = default;
     Board(const std::string& puzzle, std::array<std::array<int, 9>, 9> sol);
     void MoveCaret(int dRow, int dCol);
@@ -28,4 +29,5 @@ class Board
     void ToggleCandidate(int val);
     void ClearCell();
     void ClearCandidates();
+    bool IsSolved() const;
 };

@@ -38,6 +38,10 @@ void Board::SetValue(int val)
     if (!cell.preFilled)
     {
         cell.value = val;
+        if (val != 0 && val != solution[caret[0]][caret[1]])
+        {
+            mistakes++;
+        }
     }
 }
 
@@ -60,4 +64,19 @@ void Board::ToggleCandidate(int val)
 {
     Cell& cell = grid[caret[0]][caret[1]];
     cell.candidates.flip(val);
+}
+
+bool Board::IsSolved() const
+{
+    for (int row = 0; row < 9; row++)
+    {
+        for (int col = 0; col < 9; col++)
+        {
+            if (grid[row][col].value != solution[row][col])
+            {
+                return false;
+            }
+        }
+    }
+    return true;
 }

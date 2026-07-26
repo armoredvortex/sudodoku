@@ -3,16 +3,18 @@
 #include "board.h"
 #include "raylib.h"
 
-const Color BACKGROUND = {24, 22, 22, 255};
-const Color LINE_SECONDARY = {168, 161, 190, 155};
-const Color LINE_PRIMARY = {214, 214, 214, 155};
-const Color HIGHLIGHTED = {147, 140, 108, 100};
-const Color PREFILLED = {13, 12, 12, 255};
-const Color NUM = {215, 215, 215, 255};
-const Color WRONG = {200, 0, 0, 100};
-const Color NOTE = {255, 255, 255, 200};
+const Color BACKGROUND = {30, 30, 36, 255};      // Deep gray with a hint of navy
+const Color LINE_SECONDARY = {80, 80, 95, 255};  // Visible cool-gray
+const Color LINE_PRIMARY = {190, 200, 220, 255}; // Bright icy silver
+const Color HIGHLIGHTED = {38, 79, 120, 180};    // Classic editor blue
+const Color PREFILLED = {36, 36, 44, 255};       // Elevated cool gray
+const Color NUM = {250, 250, 255, 255};          // Icy white
+const Color WRONG = {244, 71, 71, 220};          // Standard VS Code error red
+const Color NOTE = {150, 150, 165, 255};         // Crisp light cool-gray
 
-void DrawBoard(const Board& board);
+void DrawBoard(const Board& board, float elapsedTime = 0.0f);
+
+void DrawVictoryScreen(float elapsedTime, int mistakes);
 
 void DrawLineDashedEx(Vector2 startPos, Vector2 endPos, float thickness, int dashSize,
                       int spaceSize, Color color);
