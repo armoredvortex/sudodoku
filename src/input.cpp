@@ -19,13 +19,14 @@ void HandleMovement(Board& board)
 
 void HandleNumInput(Board& board)
 {
+    bool candidateMode = IsKeyDown(KEY_LEFT_SHIFT) || IsKeyDown(KEY_RIGHT_SHIFT);
     int ch = GetCharPressed();
 
     while (ch > 0)
     {
         if (ch >= '1' && ch <= '9')
         {
-            if (board.CandidateMode)
+            if (candidateMode)
             {
                 board.ToggleCandidate(ch - '0');
             }
@@ -43,7 +44,8 @@ void HandleNumInput(Board& board)
         }
 
         if (ch == '0')
-            if (board.CandidateMode)
+        {
+            if (candidateMode)
             {
                 board.ClearCandidates();
             }
@@ -51,20 +53,9 @@ void HandleNumInput(Board& board)
             {
                 board.ClearCell();
             }
+        }
 
         ch = GetCharPressed();
-    }
-}
-
-void HandleInputMode(Board& board)
-{
-    if (IsKeyPressed(KEY_C))
-    {
-        board.CandidateMode = true;
-    }
-    else if (IsKeyPressed(KEY_V))
-    {
-        board.CandidateMode = false;
     }
 }
 
@@ -72,5 +63,4 @@ void HandleInput(Board& board)
 {
     HandleMovement(board);
     HandleNumInput(board);
-    HandleInputMode(board);
 }

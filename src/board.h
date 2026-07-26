@@ -17,10 +17,10 @@ class Cell
 class Board
 {
   public:
-    bool CandidateMode = false;
     std::array<std::array<Cell, 9>, 9> grid;
     std::array<std::array<int, 9>, 9> solution;
     std::array<int, 2> caret = {0, 0};
+    Board() = default;
     Board(const std::string& puzzle, std::array<std::array<int, 9>, 9> sol);
     void MoveCaret(int dRow, int dCol);
     int GetValue();
