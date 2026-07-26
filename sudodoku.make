@@ -119,11 +119,13 @@ GENERATED :=
 OBJECTS :=
 
 GENERATED += $(OBJDIR)/board.o
+GENERATED += $(OBJDIR)/cli.o
 GENERATED += $(OBJDIR)/input.o
 GENERATED += $(OBJDIR)/main.o
 GENERATED += $(OBJDIR)/renderer.o
 GENERATED += $(OBJDIR)/solver.o
 OBJECTS += $(OBJDIR)/board.o
+OBJECTS += $(OBJDIR)/cli.o
 OBJECTS += $(OBJDIR)/input.o
 OBJECTS += $(OBJDIR)/main.o
 OBJECTS += $(OBJDIR)/renderer.o
@@ -192,6 +194,9 @@ endif
 # #############################################
 
 $(OBJDIR)/board.o: src/board.cpp
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/cli.o: src/cli.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/input.o: src/input.cpp
