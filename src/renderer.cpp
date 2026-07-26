@@ -22,6 +22,7 @@ void DrawBoard(const Board& board, float elapsedTime)
     int boardX = (width - boardSize) / 2;
 
     int boardY = (height - totalUIHeight) / 2;
+    Cell HighlightedCell = board.grid[board.caret[0]][board.caret[1]];
 
     for (int row = 0; row < 9; row++)
     {
@@ -36,6 +37,10 @@ void DrawBoard(const Board& board, float elapsedTime)
             if (board.caret[0] == row && board.caret[1] == col)
             {
                 DrawRectangle(x, y, cellSize, cellSize, HIGHLIGHTED);
+            }
+            else if (HighlightedCell.value && HighlightedCell.value == cell.value)
+            {
+                DrawRectangle(x, y, cellSize, cellSize, SAME_VALUE);
             }
             else if (cell.preFilled)
             {

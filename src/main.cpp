@@ -113,7 +113,7 @@ int main(int argc, char* argv[])
         Board gameBoard(puzzle, solution.solution);
 
         // Tell the window to use vsync and work on high DPI displays
-        SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI);
+        SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI | FLAG_WINDOW_RESIZABLE);
 
         // Create the window and OpenGL context
         InitWindow(1000, 1000, "Sudodoku");

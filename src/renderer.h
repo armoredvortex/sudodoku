@@ -11,6 +11,7 @@ const Color PREFILLED = {36, 36, 44, 255};       // Elevated cool gray
 const Color NUM = {250, 250, 255, 255};          // Icy white
 const Color WRONG = {244, 71, 71, 220};          // Standard VS Code error red
 const Color NOTE = {150, 150, 165, 255};         // Crisp light cool-gray
+const Color SAME_VALUE = {38, 79, 120, 100};     // Faded classic editor blue
 
 void DrawBoard(const Board& board, float elapsedTime = 0.0f);
 
