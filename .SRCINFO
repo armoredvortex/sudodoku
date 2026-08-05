@@ -1,0 +1,16 @@
+pkgbase = sudodoku
+	pkgdesc = Fast, distraction-free, cli-first Sudoku for Linux
+	pkgver = 1.0.0
+	pkgrel = 1
+	url = https://github.com/armoredvortex/sudodoku
+	install = sudodoku.install
+	arch = x86_64
+	license = MIT
+	makedepends = gcc
+	makedepends = make
+	depends = libx11
+	depends = gcc-libs
+	source = sudodoku-1.0.0.tar.gz::https://github.com/armoredvortex/sudodoku/archive/refs/tags/v1.0.0.tar.gz
+	sha256sums = SKIP
+
+pkgname = sudodoku

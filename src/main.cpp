@@ -194,7 +194,7 @@ int main(int argc, char* argv[])
     auto history = GetSolveHistory();
     auto ongoing = GetInProgressPuzzles();
 
-    Font JetBrainsMono = LoadFontEx("resources/JetBrainsMono-Bold.ttf", 128, 0, 0);
+    Font JetBrainsMono = LoadFontEx(GetFontPath().c_str(), 128, 0, 0);
 
     while (!WindowShouldClose() && state != AppState::EXIT)
     {

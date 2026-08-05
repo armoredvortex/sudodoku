@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Sudodoku
+Comment=Fast, distraction-free, cli-first Sudoku for Linux.
+Exec=sudodoku
+Icon=sudodoku
+Terminal=false
+Categories=Game;
+Keywords=sudoku;puzzle;

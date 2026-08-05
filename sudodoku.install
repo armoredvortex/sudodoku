@@ -1,0 +1,28 @@
+_seed_puzzles() {
+    # Determine the real user's home directory.
+    # pacman runs as root, so $HOME is /root — use $SUDO_USER or logname instead.
+    local real_user="${SUDO_USER:-$(logname 2>/dev/null)}"
+    local home_dir
+
+    if [ -n "$real_user" ]; then
+        home_dir="$(getent passwd "$real_user" | cut -d: -f6)"
+    else
+        home_dir="$HOME"
+    fi
+
+    [ -z "$home_dir" ] && return
+
+    local sudoku_dir="$home_dir/.sudodoku"
+    install -dm755 "$sudoku_dir"
+
+    for difficulty in easy medium hard; do
+        local dest="$sudoku_dir/puzzles_${difficulty}.txt"
+        if [ ! -f "$dest" ]; then
+            install -m644 "/usr/share/sudodoku/puzzles/puzzles_${difficulty}.txt" "$dest"
+        fi
+    done
+}
+
+post_install() {
+    _seed_puzzles
+}

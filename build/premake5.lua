@@ -212,6 +212,19 @@ if (downloadRaylib) then
         cdialect "C23"
         cppdialect "C++20"
 
+        -- Bake the install prefix into release builds so the binary knows where
+        -- to find its data files (font, puzzles). Debug builds get no prefix and
+        -- fall back to the local resources/ directory.
+        -- Set the INSTALL_PREFIX environment variable before running premake:
+        --   INSTALL_PREFIX=/usr ./premake5 gmake
+        filter "configurations:Release"
+            local prefix = os.getenv("INSTALL_PREFIX")
+            if prefix and prefix ~= "" then
+                defines { "INSTALL_PREFIX=\"" .. prefix .. "\"" }
+            end
+
+        filter{}
+
         includedirs {raylib_dir .. "/src" }
 
         flags { "ShadowedVariables"}
@@ -242,7 +255,6 @@ if (downloadRaylib) then
             links {"OpenGL.framework", "Cocoa.framework", "IOKit.framework", "CoreFoundation.framework", "CoreAudio.framework", "CoreVideo.framework", "AudioToolbox.framework"}
 
         filter{}
-        
 
     project "raylib"
         kind "StaticLib"

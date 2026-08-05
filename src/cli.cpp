@@ -6,6 +6,12 @@
 #include <iostream>
 #include <sstream>
 
+// Compile-time install prefix, e.g. /usr or /usr/local.
+// Falls back to empty string (local dev mode) if not set.
+#ifndef INSTALL_PREFIX
+#define INSTALL_PREFIX ""
+#endif
+
 namespace fs = std::filesystem;
 
 std::string GetHomeDir()
@@ -21,6 +27,37 @@ std::string GetHomeDir()
 std::string GetSudokuDir()
 {
     return GetHomeDir() + "/.sudodoku";
+}
+
+std::string GetFontPath()
+{
+    // 1. Installed path: <INSTALL_PREFIX>/share/sudodoku/JetBrainsMono-Bold.ttf
+    //    Only checked when built with -DINSTALL_PREFIX=...
+    const std::string installPrefix = INSTALL_PREFIX;
+    if (!installPrefix.empty())
+    {
+        std::string installedFont =
+            installPrefix + "/share/sudodoku/JetBrainsMono-Bold.ttf";
+        if (fs::exists(installedFont))
+            return installedFont;
+    }
+
+    // 2. XDG_DATA_DIRS fallback (covers e.g. /usr/local/share on some distros)
+    const char* xdgDataDirs = std::getenv("XDG_DATA_DIRS");
+    if (xdgDataDirs)
+    {
+        std::stringstream ss(xdgDataDirs);
+        std::string dir;
+        while (std::getline(ss, dir, ':'))
+        {
+            std::string candidate = dir + "/sudodoku/JetBrainsMono-Bold.ttf";
+            if (fs::exists(candidate))
+                return candidate;
+        }
+    }
+
+    // 3. Local dev fallback: resources/ relative to working directory
+    return "resources/JetBrainsMono-Bold.ttf";
 }
 
 std::string GetPuzzleFilePath(const std::string& difficulty)

@@ -26,6 +26,9 @@ struct InProgressEntry
     int mistakes;
 };
 
+// Get the path to the bundled font, checking installed locations then local resources/
+std::string GetFontPath();
+
 // Initialize ~/.sudodoku directory
 void InitializePuzzleDirectory();
 

@@ -77,7 +77,7 @@ else ifeq ($(config),release_x64)
 TARGETDIR = bin/Release
 TARGET = $(TARGETDIR)/sudodoku
 OBJDIR = obj/x64/Release/sudodoku
-DEFINES += -DNDEBUG -DPLATFORM_DESKTOP -DGRAPHICS_API_OPENGL_33 -D_GLFW_X11
+DEFINES += -DNDEBUG -DINSTALL_PREFIX=\"/usr/local\" -DPLATFORM_DESKTOP -DGRAPHICS_API_OPENGL_33 -D_GLFW_X11
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -Wshadow -O2 -std=c23
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -Wshadow -O2 -std=c++20
 LIBS += bin/Release/libraylib.a -lpthread -lm -ldl -lrt -lX11
@@ -88,7 +88,7 @@ else ifeq ($(config),release_x86)
 TARGETDIR = bin/Release
 TARGET = $(TARGETDIR)/sudodoku
 OBJDIR = obj/x86/Release/sudodoku
-DEFINES += -DNDEBUG -DPLATFORM_DESKTOP -DGRAPHICS_API_OPENGL_33 -D_GLFW_X11
+DEFINES += -DNDEBUG -DINSTALL_PREFIX=\"/usr/local\" -DPLATFORM_DESKTOP -DGRAPHICS_API_OPENGL_33 -D_GLFW_X11
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m32 -Wshadow -O2 -std=c23
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m32 -Wshadow -O2 -std=c++20
 LIBS += bin/Release/libraylib.a -lpthread -lm -ldl -lrt -lX11
@@ -99,7 +99,7 @@ else ifeq ($(config),release_arm64)
 TARGETDIR = bin/Release
 TARGET = $(TARGETDIR)/sudodoku
 OBJDIR = obj/ARM64/Release/sudodoku
-DEFINES += -DNDEBUG -DPLATFORM_DESKTOP -DGRAPHICS_API_OPENGL_33 -D_GLFW_X11
+DEFINES += -DNDEBUG -DINSTALL_PREFIX=\"/usr/local\" -DPLATFORM_DESKTOP -DGRAPHICS_API_OPENGL_33 -D_GLFW_X11
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -Wshadow -O2 -std=c23
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -Wshadow -O2 -std=c++20
 LIBS += bin/Release/libraylib.a -lpthread -lm -ldl -lrt -lX11
