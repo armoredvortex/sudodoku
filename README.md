@@ -1,3 +1,8 @@
+<p align="center">
+  <img src="resources/sudodoku.png" alt="Icon" height="80">
+  <br>
+</p>  
+
 # sudodoku
 
 A minimal sudoku client written using raylib
@@ -5,6 +10,21 @@ A minimal sudoku client written using raylib
 <p align="center">
   <img src="sudodoku.gif" alt="Screenshot" height="300">
 </p>
+
+## Installation
+
+**From source**
+```bash
+git clone https://github.com/armoredvortex/sudodoku && cd sudodoku/build
+
+INSTALL_PREFIX=/usr/local ./premake5 gmake && cd ..
+
+make config=release_x64
+sudo make -f install.make install PREFIX=/usr/local
+
+mkdir -p ~/.sudodoku
+cp /usr/local/share/sudodoku/puzzles/puzzles_*.txt ~/.sudodoku/
+```
 
 ## Keybinds
 
