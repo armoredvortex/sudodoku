@@ -10,7 +10,7 @@ depends=('libx11' 'gcc-libs')
 makedepends=('gcc' 'make')
 install=sudodoku.install
 source=("$pkgname-$pkgver.tar.gz::https://github.com/armoredvortex/sudodoku/archive/refs/tags/v$pkgver.tar.gz")
-sha256sums=('SKIP')
+sha256sums=('e36a622d5631b13154231ff729b00b1e3e35c87a7ce2d3180389e6252637aca9')
 
 prepare() {
     cd "$pkgname-$pkgver"

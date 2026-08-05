@@ -403,6 +403,10 @@ Makefile
 sudodoku.make
 raylib.make
 
+# makepkg working directories (only when run from project root)
+/pkg/
+*.pkg.tar.*
+
 # Vi and Vim
 *.swp
 *.swo

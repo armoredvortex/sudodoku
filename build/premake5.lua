@@ -119,11 +119,11 @@ end
 downloadRaylib = true
 raylib_dir = "external/raylib-master"
 
-workspaceName = 'MyGame'
+workspaceName = 'sudodoku'
 baseName = path.getbasename(path.getdirectory(os.getcwd()));
 
 --if (baseName ~= 'raylib-quickstart') then
-    workspaceName = baseName
+--    workspaceName = baseName
 --end
 
 if (os.isdir('build_files') == false) then
