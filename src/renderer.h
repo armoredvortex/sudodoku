@@ -13,7 +13,7 @@ const Color WRONG = {244, 71, 71, 220};          // Standard VS Code error red
 const Color NOTE = {150, 150, 165, 255};         // Crisp light cool-gray
 const Color SAME_VALUE = {38, 79, 120, 100};     // Faded classic editor blue
 
-void DrawBoard(const Board& board, float elapsedTime = 0.0f);
+void DrawBoard(const Board& board, const Font& font, float elapsedTime = 0.0f);
 
 #include "cli.h"
 

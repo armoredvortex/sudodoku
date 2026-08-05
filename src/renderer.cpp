@@ -3,7 +3,7 @@
 #include "raylib.h"
 #include <cstdio>
 
-void DrawBoard(const Board& board, float elapsedTime)
+void DrawBoard(const Board& board, const Font& font, float elapsedTime)
 {
     int width = GetScreenWidth();
     int height = GetScreenHeight();
@@ -71,8 +71,10 @@ void DrawBoard(const Board& board, float elapsedTime)
 
                     int w = MeasureText(text, noteFont);
 
-                    DrawText(text, noteX + (miniCell - w) / 2, noteY + (miniCell - noteFont) / 2,
-                             noteFont, NOTE);
+                    DrawTextEx(font, text,
+                               (Vector2){noteX + (miniCell - w) / 2.0f,
+                                         noteY + (miniCell - noteFont) / 2.0f},
+                               (float)noteFont, 2.0f, NOTE);
                 }
             }
 
@@ -80,8 +82,10 @@ void DrawBoard(const Board& board, float elapsedTime)
             {
                 int textWidth = MeasureText(val, fontSize);
 
-                DrawText(val, x + (cellSize - textWidth) / 2, y + (cellSize - fontSize) / 2,
-                         fontSize, NUM);
+                DrawTextEx(
+                    font, val,
+                    (Vector2){x + (cellSize - textWidth) / 2.0f, y + (cellSize - fontSize) / 2.0f},
+                    (float)fontSize, 2.0f, NUM);
             }
         }
     }

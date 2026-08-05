@@ -118,7 +118,8 @@ int main(int argc, char* argv[])
     }
 
     // GUI Mode
-    SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI);
+    SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI | FLAG_WINDOW_RESIZABLE |
+                   FLAG_WINDOW_UNDECORATED);
     InitWindow(1000, 1000, "Sudodoku");
     SetExitKey(0); // Disable ESC from exiting immediately
 
@@ -192,6 +193,8 @@ int main(int argc, char* argv[])
 
     auto history = GetSolveHistory();
     auto ongoing = GetInProgressPuzzles();
+
+    Font JetBrainsMono = LoadFontEx("resources/JetBrainsMono-Bold.ttf", 128, 0, 0);
 
     while (!WindowShouldClose() && state != AppState::EXIT)
     {
@@ -329,7 +332,7 @@ int main(int argc, char* argv[])
                                  gameBoard->mistakes);
             }
 
-            DrawBoard(*gameBoard, elapsedTime);
+            DrawBoard(*gameBoard, JetBrainsMono, elapsedTime);
 
             if (gameBoard->IsSolved())
             {
@@ -361,7 +364,7 @@ int main(int argc, char* argv[])
                 state = AppState::PLAYING;
             }
 
-            DrawBoard(*gameBoard, elapsedTime);
+            DrawBoard(*gameBoard, JetBrainsMono, elapsedTime);
             DrawConfirmResetScreen();
             break;
         }
@@ -381,6 +384,7 @@ int main(int argc, char* argv[])
         }
     }
 
+    UnloadFont(JetBrainsMono);
     CloseWindow();
     return 0;
 }
